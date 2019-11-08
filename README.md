@@ -1,3 +1,5 @@
+<img src="logo.png" width="300">
+
 # GRIT (Geniem expoRt Import Tool)
 
 GRIT is a command line tool for exporting and importing worklogs from Tempo using [Tempo API](https://tempo-io.github.io/tempo-api-docs/)
