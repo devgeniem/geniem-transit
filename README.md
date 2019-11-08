@@ -16,12 +16,12 @@ GRIT is a command line tool for exporting and importing worklogs from Tempo usin
 
 ### Environment variables
 
-| Variable           | Purpose                               | Type   |
-| ------------------ | ------------------------------------- | ------ |
-| outDir             | Directory to output exported worklogs | string |
-| DEFAULT_PROJECT    | Set default project JIRA key          | string |
-| EXPORT_TEMPO_TOKEN | Tempo API token for exporting         | string |
-| IMPORT_TEMPO_TOKEN | Tempo API token for importing         | string |
+| Variable           | Purpose                               | Type   | Example     |
+| ------------------ | ------------------------------------- | ------ | ----------- |
+| outDir             | Directory to output exported worklogs | string | './exports' |
+| DEFAULT_PROJECT    | Set default project JIRA key          | string | 'XX232SS'   |
+| EXPORT_TEMPO_TOKEN | Tempo API token for exporting         | string | 'XX232SS'   |
+| IMPORT_TEMPO_TOKEN | Tempo API token for importing         | string | 'BUILD'     |
 
 ### Export
 
