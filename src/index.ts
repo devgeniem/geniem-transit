@@ -1,7 +1,7 @@
 require('dotenv').config();
 import * as minimist from 'minimist';
-import { printHeader } from './util';
-import { validateParameters } from './validator';
+import { printHeader } from './utils/util';
+import { validateParameters } from './utils/validator';
 import { CLIModes } from './types';
 import { runGRIT } from './runner';
 

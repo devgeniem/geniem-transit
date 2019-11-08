@@ -1,6 +1,6 @@
 import { fetchTempoWorklogs } from './tempo';
-import { writeFile } from './file';
-import { TempoResult } from './types';
+import { writeFile } from '../utils/file';
+import { TempoResult } from '../types';
 
 interface Params {
   startDate: string;
@@ -11,16 +11,18 @@ interface Params {
 }
 
 export const runExport = async ({ startDate, endDate, projectKey }: Params) => {
-  const worklogResult = await fetchTempoWorklogs({
-    from: startDate,
-    to: endDate,
-    projectId: projectKey,
-    token: process.env.EXPORT_TEMPO_TOKEN,
-  });
-  const filePath = getWritePath({ startDate, endDate, projectKey });
-  await writeFile(filePath, JSON.stringify(worklogResult.results));
+  try {
+    const worklogResult = await fetchTempoWorklogs({
+      from: startDate,
+      to: endDate,
+      projectId: projectKey,
+      token: process.env.EXPORT_TEMPO_TOKEN,
+    });
+    const filePath = getWritePath({ startDate, endDate, projectKey });
+    await writeFile(filePath, JSON.stringify(worklogResult.results));
 
-  return getReport({ startDate, endDate, projectKey, response: worklogResult, filePath });
+    return getReport({ startDate, endDate, projectKey, response: worklogResult, filePath });
+  } catch (e) {}
 };
 
 const getWritePath = ({ startDate, endDate, projectKey }: Params): string => {

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import * as querystring from 'querystring';
-import { tempoProjectWorklogsUrl } from './urls';
-import { TempoResult } from './types';
+import { tempoProjectWorklogsUrl, tempoWorklogsUrl } from '../urls';
+import { TempoResult, WorklogPostData } from '../types';
 
 /**
  *
@@ -36,3 +36,14 @@ export async function fetchTempoWorklogs({
 const getTempoHeaders = (token: string) => {
   return { Authorization: `Bearer ${token}` };
 };
+
+export async function postTempoWorklogs(logs: WorklogPostData[], token: string) {
+  const headers = getTempoHeaders(token);
+  const url = tempoWorklogsUrl();
+  console.info('Rows ', logs.length);
+
+  for (const log of logs) {
+    console.info(log);
+    await fetch(url, { headers, body: JSON.stringify(log), method: 'POST' });
+  }
+}

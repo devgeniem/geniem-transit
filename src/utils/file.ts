@@ -2,7 +2,7 @@ const fs = require('fs');
 
 export const readFile = (path: string, opts = 'utf8') =>
   new Promise((resolve, reject) => {
-    fs.readFile(path, opts, (err: boolean, data: object) => {
+    fs.readFile(path, opts, (err: boolean, data: string) => {
       if (err) reject(err);
       else resolve(data);
     });

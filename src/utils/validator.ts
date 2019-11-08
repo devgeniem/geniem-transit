@@ -1,4 +1,4 @@
-import { CLIParams } from './types';
+import { CLIParams } from '../types';
 
 /**
  *
