@@ -9,7 +9,7 @@ export const runImport = async ({ file }: { file: string }) => {
     const parsedContent = JSON.parse(fileContent) as Worklog[];
 
     const rowsToPost = parseWorklogs(parsedContent);
-    await postTempoWorklogs(rowsToPost, process.env.EXPORT_TEMPO_TOKEN);
+    await postTempoWorklogs(rowsToPost, process.env.IMPORT_TEMPO_TOKEN);
   } catch (e) {
     console.error(e);
   }
