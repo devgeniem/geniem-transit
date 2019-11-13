@@ -42,8 +42,19 @@ export async function postTempoWorklogs(logs: WorklogPostData[], token: string) 
   const url = tempoWorklogsUrl();
   console.info('Rows ', logs.length);
 
+  const erroredItems: WorklogPostData[] = [];
+  let counter = 1;
   for (const log of logs) {
-    console.info(log);
-    await fetch(url, { headers, body: JSON.stringify(log), method: 'POST' });
+    console.info(log.issueKey, log.startDate, log.authorAccountId);
+    console.info(`Importing row ${counter}/${logs.length}`);
+    counter += 1;
+    const response = await fetch(url, { headers, body: JSON.stringify(log), method: 'POST' });
+    if (response.status !== 200) {
+      console.log(response.status);
+      console.log(await response.text());
+      erroredItems.push(log);
+    }
   }
+
+  return erroredItems;
 }

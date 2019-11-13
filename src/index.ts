@@ -6,7 +6,7 @@ import { CLIModes } from './types';
 import { runGRIT } from './runner';
 
 (async () => {
-  const { mode, startDate, endDate, projectKey, file } = parseArguments();
+  const { mode, startDate, endDate, projectKey, file, parse } = parseArguments();
 
   try {
     validateParameters({ mode, startDate, endDate, projectKey, file });
@@ -16,18 +16,19 @@ import { runGRIT } from './runner';
   }
 
   printHeader({ mode, startDate, endDate, projectKey });
-  const result = await runGRIT({ mode, startDate, endDate, projectKey, file });
+  const result = await runGRIT({ mode, startDate, endDate, projectKey, file, parse });
   console.info(result);
   process.exit();
 })();
 
 function parseArguments() {
-  const { start, end, project, mode, file } = minimist(process.argv.slice(2));
+  const { start, end, project, mode, file, parse } = minimist(process.argv.slice(2));
   return {
     startDate: start as string,
     endDate: end as string,
     projectKey: project ? (project as string) : (process.env.DEFAULT_PROJECT as string),
     mode: mode ? (mode as CLIModes) : CLIModes.export,
     file: file ? (file as string) : undefined,
+    parse: parse ? parse === 'true' : true,
   };
 }

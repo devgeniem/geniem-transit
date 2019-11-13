@@ -4,6 +4,7 @@ export interface CLIParams {
   endDate?: string;
   projectKey?: string;
   file?: string;
+  parse?: boolean;
 }
 
 export enum CLIModes {
