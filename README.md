@@ -3,6 +3,7 @@
 # GRIT (Geniem expoRt Import Tool)
 
 GRIT is a command line tool for exporting and importing worklogs from Tempo using [Tempo API](https://tempo-io.github.io/tempo-api-docs/)
+Jira Tempo doesn't support worklogs import / export if you which to move project to other instance. With this tool you can sync worklogs from system to another and keep worklog history up-to-date.
 
 ## Usage
 
