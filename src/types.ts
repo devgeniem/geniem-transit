@@ -5,6 +5,8 @@ export interface CLIParams {
   projectKey?: string;
   file?: string;
   parse?: boolean;
+  filterUsers?: string[];
+  onlyUsers?: string[];
 }
 
 export enum CLIModes {

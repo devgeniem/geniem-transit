@@ -8,9 +8,11 @@ interface Params {
   projectKey: string;
   response?: TempoResult;
   filePath?: string;
+  filterUsers?: string[];
+  onlyUsers?: string[];
 }
 
-export const runExport = async ({ startDate, endDate, projectKey }: Params) => {
+export const runExport = async ({ startDate, endDate, projectKey, filterUsers, onlyUsers }: Params) => {
   try {
     const worklogResult = await fetchTempoWorklogs({
       from: startDate,
@@ -18,6 +20,21 @@ export const runExport = async ({ startDate, endDate, projectKey }: Params) => {
       projectId: projectKey,
       token: process.env.EXPORT_TEMPO_TOKEN,
     });
+
+    if (filterUsers.length > 0) {
+      const filteredResults = worklogResult.results.filter(row => {
+        return !filterUsers.includes(row.author.accountId);
+      });
+      worklogResult.results = filteredResults;
+    }
+
+    if (onlyUsers.length > 0) {
+      const filteredResults = worklogResult.results.filter(row => {
+        return onlyUsers.includes(row.author.accountId);
+      });
+      worklogResult.results = filteredResults;
+    }
+
     const filePath = getWritePath({ startDate, endDate, projectKey });
     await writeFile(filePath, JSON.stringify(worklogResult.results));
 
@@ -32,6 +49,6 @@ const getWritePath = ({ startDate, endDate, projectKey }: Params): string => {
 const getReport = ({ startDate, endDate, projectKey, response, filePath }: Params): string => {
   return `Project ${projectKey} Export Done.
 Report generated to ${filePath}
-Worklog count ${response.metadata.count}
+Worklog count ${response.results.length}
 `;
 };

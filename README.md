@@ -9,14 +9,16 @@ Jira Tempo doesn't support worklogs import / export if you which to move project
 
 ### Parameters
 
-| Parameter | Required?      | Default                              | Description                                      | Possible values                  |
-| --------- | -------------- | ------------------------------------ | ------------------------------------------------ | -------------------------------- |
-| mode      | Yes            | export                               | Operation mode                                   | import, export                   |
-| start     | Yes for export | -                                    | Start of date range to export. Format YYYY-MM-DD | 2019-01-01                       |
-| end       | Yes for export | -                                    | End of date range to export. Format YYYY-MM-DD   | 2019-01-01                       |
-| project   | Yes for export | DEFAULT_PROJECT environment variable | JIRA Project key to export worklogs              | BUILD, KNI                       |
-| file      | Yes for import | -                                    | Exported worklog file to import                  | BUILD_2015-09-01_2015-12-31.json |
-| parse     | No             | true                                 | Parse raw Tempo worklog before importing         | true, false                      |
+| Parameter   | Required?      | Default                              | Description                                                       | Possible values                  |
+| ----------- | -------------- | ------------------------------------ | ----------------------------------------------------------------- | -------------------------------- |
+| mode        | Yes            | export                               | Operation mode                                                    | import, export                   |
+| start       | Yes for export | -                                    | Start of date range to export. Format YYYY-MM-DD                  | 2019-01-01                       |
+| end         | Yes for export | -                                    | End of date range to export. Format YYYY-MM-DD                    | 2019-01-01                       |
+| project     | Yes for export | DEFAULT_PROJECT environment variable | JIRA Project key to export worklogs                               | BUILD, KNI                       |
+| file        | Yes for import | -                                    | Exported worklog file to import                                   | BUILD_2015-09-01_2015-12-31.json |
+| parse       | No             | true                                 | Parse raw Tempo worklog before importing                          | true, false                      |
+| filterUsers | No             | -                                    | List of author accound ids to filter out from export              | XXX:123,XXX:456                  |
+| onlyUsers   | No             | -                                    | List of author accound ids to keep from filtering out from export | XXX:123,XXX:456                  |
 
 ### Environment variables
 
