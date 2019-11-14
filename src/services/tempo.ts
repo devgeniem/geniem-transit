@@ -19,16 +19,34 @@ export async function fetchTempoWorklogs({
   from: string;
   to: string;
   token: string;
-}) {
+}): Promise<TempoResult> {
   const url = tempoProjectWorklogsUrl(projectId);
-  const parameters = {
-    from,
-    to,
-    limit: 1000,
-  };
+  let page = 0;
 
-  const response = await fetch(`${url}?${querystring.stringify(parameters)}`, { headers: getTempoHeaders(token) });
-  const result = (await response.json()) as TempoResult;
+  let hasNext = true;
+  let result: TempoResult;
+
+  while (hasNext) {
+    const limit = 1000;
+    const parameters = {
+      from,
+      to,
+      limit,
+      offset: page * limit,
+    };
+    const response = await fetch(`${url}?${querystring.stringify(parameters)}`, { headers: getTempoHeaders(token) });
+    const tempResult = (await response.json()) as TempoResult;
+
+    if (page === 0) {
+      result = tempResult;
+    } else {
+      result.results = [...result.results, ...tempResult.results];
+    }
+    page += 1;
+    if (!tempResult.metadata.next) {
+      hasNext = false;
+    }
+  }
 
   return result;
 }
