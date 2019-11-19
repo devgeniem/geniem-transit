@@ -1,4 +1,4 @@
-<img src="logo.png" width="300">
+<img src="logo.jpg" width="400">
 
 # Geniem Transit (Export Import Tool for Jira Tempo)
 
