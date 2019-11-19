@@ -22,13 +22,13 @@ import { runGRIT } from './runner';
 })();
 
 function parseArguments() {
-  const { start, end, project, mode, file, parse, filterUsers, onlyUsers } = minimist(process.argv.slice(2));
+  const { start, end, project, mode, file, parse, excludeUsers, includeUsers } = minimist(process.argv.slice(2));
   return {
     startDate: start as string,
     endDate: end as string,
     projectKey: project ? (project as string) : (process.env.DEFAULT_PROJECT as string),
-    filterUsers: filterUsers ? filterUsers.split(',') : [],
-    onlyUsers: onlyUsers ? onlyUsers.split(',') : [],
+    filterUsers: excludeUsers ? excludeUsers.split(',') : [],
+    onlyUsers: includeUsers ? includeUsers.split(',') : [],
     mode: mode ? (mode as CLIModes) : CLIModes.export,
     file: file ? (file as string) : undefined,
     parse: parse ? parse === 'true' : true,
