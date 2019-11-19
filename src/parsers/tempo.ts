@@ -1,5 +1,9 @@
 import { WorklogPostData, Worklog } from '../types';
 
+/**
+ * Parse raw Tempo worklogs into format that can be sent to Tempo Add Worklog endpoint.
+ * @param data worklog array to parse
+ */
 export const parseWorklogs = (data: Worklog[]): WorklogPostData[] => {
   return data.map(row => {
     const tempRow: WorklogPostData = {

@@ -1,17 +1,25 @@
-const fs = require('fs');
+import * as fs from 'fs-extra';
 
-export const readFile = (path: string, opts = 'utf8') =>
-  new Promise((resolve, reject) => {
-    fs.readFile(path, opts, (err: boolean, data: string) => {
-      if (err) reject(err);
-      else resolve(data);
-    });
-  });
+/**
+ * Helper to read a JSON file from disk.
+ * @param path file read path
+ */
+export const readFile = async <T>(path: string) => {
+  try {
+    const file = await fs.readJson(path);
+    return file as T;
+  } catch (e) {}
+};
 
-export const writeFile = (path: string, data: string, opts = 'utf8') =>
-  new Promise((resolve, reject) => {
-    fs.writeFile(path, data, opts, (err: string) => {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
+/**
+ * Helper to write a JSON file to disk.
+ * @param path where to write
+ * @param data json data to write
+ */
+export const writeFile = async (path: string, data: any) => {
+  try {
+    await fs.outputJson(path, data);
+  } catch (e) {
+    console.error(e);
+  }
+};

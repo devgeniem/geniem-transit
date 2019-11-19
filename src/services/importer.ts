@@ -5,22 +5,24 @@ import { postTempoWorklogs } from '../services/tempo';
 
 export const runImport = async ({ file, parse }: { file: string; parse: boolean }) => {
   try {
-    const fileContent = (await readFile(getFilePath(file))) as string;
-    let rowsToPost;
+    let rowsToPost: WorklogPostData[] | Worklog[];
 
     if (parse) {
-      const parsedContent = JSON.parse(fileContent) as Worklog[];
-      rowsToPost = parseWorklogs(parsedContent);
+      const filecContent = await readFile<Worklog[]>(getFilePath(file));
+      rowsToPost = parseWorklogs(filecContent);
     } else {
-      rowsToPost = JSON.parse(fileContent) as WorklogPostData[];
+      rowsToPost = await readFile<WorklogPostData[]>(getFilePath(file));
     }
 
     const errorItems = await postTempoWorklogs(rowsToPost, process.env.IMPORT_TEMPO_TOKEN);
+    let errorText = '';
     if (errorItems.length > 1) {
-      await writeFile(errorsPath(new Date().getTime()), JSON.stringify(errorItems));
+      const errorFile = errorsPath(new Date().getTime());
+      await writeFile(errorFile, errorItems);
+      errorText = `${errorItems.length} errors while importing. Check ${errorFile} for failed rows.`;
     }
 
-    return `Import done. ${errorItems.length} while importing.`;
+    return `Import done. ${errorText}`;
   } catch (e) {
     console.error(e);
   }

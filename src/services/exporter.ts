@@ -36,10 +36,12 @@ export const runExport = async ({ startDate, endDate, projectKey, filterUsers, o
     }
 
     const filePath = getWritePath({ startDate, endDate, projectKey });
-    await writeFile(filePath, JSON.stringify(worklogResult.results));
+    await writeFile(filePath, worklogResult.results);
 
     return getReport({ startDate, endDate, projectKey, response: worklogResult, filePath });
-  } catch (e) {}
+  } catch (e) {
+    console.info(e);
+  }
 };
 
 const getWritePath = ({ startDate, endDate, projectKey }: Params): string => {
