@@ -4,10 +4,12 @@ import { tempoProjectWorklogsUrl, tempoWorklogsUrl } from '../urls';
 import { TempoResult, WorklogPostData } from '../types';
 
 /**
- *
+ * Get project worklogs from Tempo for given date range. The API request has a limit of 1000
+ * results so multiple requests are made if range has more than 1000 results.
  * @param projectId Project key
  * @param from Start of date range (YYYY-MM-DD)
  * @param to End of date range (YYYY-MM-DD)
+ * @param token Tempo API token
  */
 export async function fetchTempoWorklogs({
   projectId,
@@ -55,6 +57,11 @@ const getTempoHeaders = (token: string) => {
   return { Authorization: `Bearer ${token}` };
 };
 
+/**
+ * Send worklogs to Tempo API in a loop.
+ * @param logs Parsed worklogs
+ * @param token Tempo API token
+ */
 export async function postTempoWorklogs(logs: WorklogPostData[], token: string) {
   const headers = getTempoHeaders(token);
   const url = tempoWorklogsUrl();
