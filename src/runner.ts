@@ -2,7 +2,7 @@ import { CLIParams, CLIModes } from './types';
 import { runExport } from './services/exporter';
 import { runImport } from './services/importer';
 
-export const runGRIT = async ({
+export const runTransit = async ({
   mode,
   startDate,
   endDate,

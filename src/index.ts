@@ -3,7 +3,7 @@ import * as minimist from 'minimist';
 import { printHeader } from './utils/util';
 import { validateParameters } from './utils/validator';
 import { CLIModes } from './types';
-import { runGRIT } from './runner';
+import { runTransit } from './runner';
 
 (async () => {
   const { mode, startDate, endDate, projectKey, file, parse, filterUsers, onlyUsers } = parseArguments();
@@ -16,7 +16,7 @@ import { runGRIT } from './runner';
   }
 
   printHeader({ mode, startDate, endDate, projectKey });
-  const result = await runGRIT({ mode, startDate, endDate, projectKey, file, parse, filterUsers, onlyUsers });
+  const result = await runTransit({ mode, startDate, endDate, projectKey, file, parse, filterUsers, onlyUsers });
   console.info(result);
   process.exit();
 })();

@@ -8,8 +8,6 @@ export const runImport = async ({ file, parse }: { file: string; parse: boolean 
     const fileContent = (await readFile(getFilePath(file))) as string;
     let rowsToPost;
 
-    console.info(parse);
-
     if (parse) {
       const parsedContent = JSON.parse(fileContent) as Worklog[];
       rowsToPost = parseWorklogs(parsedContent);
